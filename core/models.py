@@ -11,5 +11,4 @@ class Product(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     description: Mapped[str]
     price: Mapped[float]
-    quantity: Mapped[int]
     type: Mapped[str]
