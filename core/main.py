@@ -30,7 +30,6 @@ def create_product(
     db_product = Product(
         description=product.description,
         price=product.price,
-        quantity=product.quantity,
         type=product.type,
     )
 

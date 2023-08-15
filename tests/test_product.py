@@ -2,10 +2,9 @@ def test_create_product(client):
     response = client.post(
         '/produto/',
         json={
-            'id':0,
+            'id': 0,
             'description': 'Suco de Laranja 400ml',
             'price': 7.0,
-            'quantity': 1,
             'type': 'suco',
         },
     )
@@ -16,7 +15,6 @@ def test_create_product(client):
     assert response.json() == {
         'description': 'Suco de Laranja 400ml',
         'price': 7.0,
-        'quantity': 1,
         'type': 'suco',
         'id': 1,
     }

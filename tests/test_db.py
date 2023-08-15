@@ -7,7 +7,6 @@ def test_create_product(session):
     new_product = Product(
         description='Suco de Laranja 400ml',
         price=7.0,
-        quantity=1,
         type='suco',
     )
     session.add(new_product)
