@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class ProductSchema(BaseModel):
@@ -6,3 +6,4 @@ class ProductSchema(BaseModel):
     description: str
     price: float
     type: str
+    model_config = ConfigDict(from_attributes=True)
