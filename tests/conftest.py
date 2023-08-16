@@ -6,7 +6,7 @@ from sqlalchemy.pool import StaticPool
 
 from core.database import get_session
 from core.main import app
-from core.models import Base
+from core.models import Base, Product
 
 
 @pytest.fixture
@@ -35,3 +35,15 @@ def client(session):
         yield client
 
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def product(session):
+    session.add(
+        Product(
+            description='Suco de Laranja 400ml',
+            price=7.0,
+            type='suco',
+        )
+    )
+    session.commit()

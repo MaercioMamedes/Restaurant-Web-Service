@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from core.database import get_session
 from core.models import Product
-from core.schemas import ProductSchema
+from core.schemas import ProductPublic, ProductSchema
 
 app = FastAPI()
 
@@ -26,7 +26,7 @@ def read_product(product_id: int, session: Session = Depends(get_session)):
         raise HTTPException(status_code=400, detail='Produto não cadastrado')
 
 
-@app.post('/produtos/', response_model=ProductSchema, status_code=201)
+@app.post('/produtos/', response_model=ProductPublic, status_code=201)
 def create_product(
     product: ProductSchema, session: Session = Depends(get_session)
 ):
@@ -59,3 +59,40 @@ def read_users(
     products = session.scalars(select(Product).offset(skip).limit(limit)).all()
 
     return {'products': products}
+
+
+@app.put('/produtos/{product_id}', response_model=ProductPublic)
+def update_product(
+    product_id: int,
+    product: ProductSchema,
+    session: Session = Depends(get_session),
+):
+
+    db_product = session.scalar(
+        select(Product).where(Product.id == product_id)
+    )
+
+    if db_product is not None:
+
+        db_product.description = product.description
+        db_product.price = product.price
+        db_product.type = product.type
+
+        session.add(db_product)
+        session.commit()
+        session.refresh(db_product)
+
+        return db_product
+
+
+@app.delete('/produtos/{product_id}')
+def delete_product(
+    product_id: int,
+    session: Session = Depends(get_session),
+):
+    db_product = session.scalar(
+        select(Product).where(Product.id == product_id)
+    )
+    session.delete(db_product)
+    session.commit()
+    return {'detail': 'Produto excluído com sucesso'}
