@@ -6,7 +6,7 @@ from sqlalchemy.pool import StaticPool
 
 from core.database import get_session
 from core.main import app
-from core.models import Base, Product
+from core.models import Base, Product, User
 
 
 @pytest.fixture
@@ -46,4 +46,16 @@ def product(session):
             type='suco',
         )
     )
+    session.commit()
+
+
+@pytest.fixture
+def user(session):
+    new_user = User(
+        name='Maercio Mamedes',
+        email='maerciomamedes@hotmail.com',
+        password='secret_key',
+    )
+
+    session.add(new_user)
     session.commit()

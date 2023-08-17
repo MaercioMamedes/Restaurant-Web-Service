@@ -128,3 +128,15 @@ def create_user(user: UserSchema, session: Session = Depends(get_session)):
 
     else:
         raise HTTPException(detail='Usuário já cadastrado', status_code=400)
+
+
+@app.get('/usuarios/{user_id}', status_code=200)
+def read_user(user_id: int, session: Session = Depends(get_session)):
+    db_user = session.scalar(select(User).where(User.id == user_id))
+
+    if db_user is not None:
+
+        return {'id': db_user.id, 'name': db_user.name, 'email': db_user.email}
+
+    else:
+        raise HTTPException(detail='usuário não encontrado', status_code=404)
