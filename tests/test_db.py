@@ -1,6 +1,6 @@
 from sqlalchemy import select
 
-from core.models import Product
+from core.models import Product, User
 
 
 def test_create_product(session):
@@ -17,3 +17,17 @@ def test_create_product(session):
     )
 
     assert product.description == 'Suco de Laranja 400ml'
+
+
+def test_create_user(session):
+    new_user = User(
+        name='Maercio Mamedes',
+        email='maerciomamedes@hotmail.com',
+        password='secret_key',
+    )
+
+    session.add(new_user)
+    session.commit()
+
+    user = session.scalar(select(User).where(User.name == 'Maercio Mamedes'))
+    assert user.name == 'Maercio Mamedes'

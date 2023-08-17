@@ -3,19 +3,34 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from core.database import get_session
-from core.models import Product
-from core.schemas import ProductPublic, ProductSchema
+from core.models import Product, User
+from core.schemas import ProductPublic, ProductSchema, UserPublic, UserSchema
 
 app = FastAPI()
+
+"""------------------ PRODUCTS VIEWS --------------------------"""
 
 
 @app.get('/')
 def read_root():
+    # endpoint home
     return {'message': 'success'}
+
+
+@app.get('/produtos/')
+def read_products(
+    skip: int = 0, limit: int = 100, session: Session = Depends(get_session)
+):
+    # endpoint list products
+    products = session.scalars(select(Product).offset(skip).limit(limit)).all()
+
+    return {'products': products}
 
 
 @app.get('/produtos/{product_id}', status_code=200)
 def read_product(product_id: int, session: Session = Depends(get_session)):
+    # endpoint get product by id
+
     db_product = session.scalar(
         select(Product).where(Product.id == product_id)
     )
@@ -30,6 +45,8 @@ def read_product(product_id: int, session: Session = Depends(get_session)):
 def create_product(
     product: ProductSchema, session: Session = Depends(get_session)
 ):
+    # endpoint create product
+
     db_product = session.scalar(
         select(Product).where(Product.description == product.description)
     )
@@ -52,21 +69,13 @@ def create_product(
     return db_product
 
 
-@app.get('/produtos/')
-def read_users(
-    skip: int = 0, limit: int = 100, session: Session = Depends(get_session)
-):
-    products = session.scalars(select(Product).offset(skip).limit(limit)).all()
-
-    return {'products': products}
-
-
 @app.put('/produtos/{product_id}', response_model=ProductPublic)
 def update_product(
     product_id: int,
     product: ProductSchema,
     session: Session = Depends(get_session),
 ):
+    # endpoint update product
 
     db_product = session.scalar(
         select(Product).where(Product.id == product_id)
@@ -90,9 +99,32 @@ def delete_product(
     product_id: int,
     session: Session = Depends(get_session),
 ):
+    # endpoint delete product
+
     db_product = session.scalar(
         select(Product).where(Product.id == product_id)
     )
     session.delete(db_product)
     session.commit()
     return {'detail': 'Produto excluído com sucesso'}
+
+
+"""  ------------ USERS VIEWS ------------------  """
+
+
+@app.post('/usuarios/', response_model=UserPublic, status_code=201)
+def create_user(user: UserSchema, session: Session = Depends(get_session)):
+    db_user = session.scalar(select(User).where(User.name == user.name))
+
+    if db_user is None:
+        new_user = User(
+            name=user.name, email=user.email, password=user.password
+        )
+
+        session.add(new_user)
+        session.commit()
+
+        return new_user
+
+    else:
+        raise HTTPException(detail='Usuário já cadastrado', status_code=400)

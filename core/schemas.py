@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 
 class ProductSchema(BaseModel):
@@ -10,3 +10,15 @@ class ProductSchema(BaseModel):
 
 class ProductPublic(ProductSchema):
     id: int
+
+
+class UserSchema(BaseModel):
+    name: str
+    email: EmailStr
+    password: str
+
+
+class UserPublic(UserSchema):
+    id: int
+    name: str
+    email: EmailStr

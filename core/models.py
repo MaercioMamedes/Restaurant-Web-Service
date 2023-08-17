@@ -12,3 +12,12 @@ class Product(Base):
     description: Mapped[str]
     price: Mapped[float]
     type: Mapped[str]
+
+
+class User(Base):
+    __tablename__ = 'user'
+
+    id: Mapped['int'] = mapped_column(primary_key=True, autoincrement=True)
+    name: Mapped[str]
+    email: Mapped[str]
+    password: Mapped[str]
