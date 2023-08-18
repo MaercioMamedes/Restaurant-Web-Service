@@ -17,15 +17,7 @@ def test_create_user(client):
     }
 
 
-def test_read_user(client):
-    client.post(
-        '/usuarios/',
-        json={
-            'name': 'Maercio Mamedes',
-            'email': 'maerciomamedes@hotmail.com',
-            'password': 'secret_key',
-        },
-    )
+def test_read_user(client, user):
 
     response = client.get('/usuarios/1')
     assert response.status_code == 200

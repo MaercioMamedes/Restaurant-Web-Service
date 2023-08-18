@@ -23,16 +23,8 @@ def test_read_products_list(client):
     assert response.status_code == 200
 
 
-def test_read_product(client):
-    client.post(
-        '/produtos/',
-        json={
-            'id': 1,
-            'description': 'Suco de Laranja 400ml',
-            'price': 7.0,
-            'type': 'suco',
-        },
-    )
+def test_read_product(client, product):
+
     response = client.get('/produtos/1')
     assert response.status_code == 200
 

@@ -39,23 +39,25 @@ def client(session):
 
 @pytest.fixture
 def product(session):
-    session.add(
-        Product(
-            description='Suco de Laranja 400ml',
-            price=7.0,
-            type='suco',
-        )
+    product = Product(
+        description='Suco de Laranja 400ml',
+        price=7.0,
+        type='suco',
     )
+    session.add(product)
     session.commit()
+    session.refresh(product)
+    return product
 
 
 @pytest.fixture
 def user(session):
-    new_user = User(
+    user = User(
         name='Maercio Mamedes',
         email='maerciomamedes@hotmail.com',
         password='secret_key',
     )
-
-    session.add(new_user)
+    session.add(user)
     session.commit()
+    session.refresh(user)
+    return user
