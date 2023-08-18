@@ -140,3 +140,36 @@ def read_user(user_id: int, session: Session = Depends(get_session)):
 
     else:
         raise HTTPException(detail='usuário não encontrado', status_code=404)
+
+
+@app.put('/usuarios/{user_id}', response_model=UserPublic, status_code=200)
+def update_user(
+    user_id: int, user: UserSchema, session: Session = Depends(get_session)
+):
+    db_user = session.scalar(select(User).where(User.id == user_id))
+
+    if db_user is not None:
+        db_user.name = user.name
+        db_user.email = user.email
+        db_user.password = user.password
+
+        session.add(db_user)
+        session.commit()
+        session.refresh(db_user)
+        return db_user
+
+    else:
+        raise HTTPException(detail='Usuário não cadastrado', status_code=404)
+
+
+@app.delete('/usuarios/{user_id}', status_code=200)
+def delete_user(user_id: int, session: Session = Depends(get_session)):
+    db_user = session.scalar(select(User).where(User.id == user_id))
+
+    if db_user is not None:
+        session.delete(db_user)
+        session.commit()
+        return {'detail': 'Usuário excluído com sucesso'}
+
+    else:
+        raise HTTPException(detail='Usuário não cadastrado', status_code=404)
