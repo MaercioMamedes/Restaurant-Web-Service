@@ -1,6 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
@@ -66,6 +66,24 @@ def user(session):
     user.clean_password = 'secret_key'
 
     return user
+
+
+@pytest.fixture
+def list_users(session):
+
+    for i in range(10):
+        password = f'secret_key{i}'
+        user = User(
+            name=f'Maercio Mamedes{i}',
+            email=f'maerciomamedes@hotmail.com{i}',
+            password=get_password_hash(password),
+        )
+        session.add(user)
+        session.commit()
+        session.refresh(user)
+        user.clean_password = f'secret_key{i}'
+
+    return session.scalars(select(User)).all()
 
 
 @pytest.fixture
