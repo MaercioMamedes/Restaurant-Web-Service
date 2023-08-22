@@ -9,7 +9,7 @@
   * ex: `DATABASE_URL="sqlite:///database.db"`
 * execute o comando `alembic upgrade head`
 
-#### Após concluir os passos anterior, execute o comando taks run, para rodar o servidor
+#### Após concluir os passos anterior, execute o comando task run, para rodar o servidor
 
 ### Endpoints
 

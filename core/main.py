@@ -14,6 +14,7 @@ from core.schemas import (
 )
 from core.security import (
     create_access_token,
+    get_current_user,
     get_password_hash,
     verify_password,
 )
@@ -157,35 +158,39 @@ def read_user(user_id: int, session: Session = Depends(get_session)):
 
 @app.put('/usuarios/{user_id}', response_model=UserPublic, status_code=200)
 def update_user(
-    user_id: int, user: UserSchema, session: Session = Depends(get_session)
+    user_id: int,
+    user: UserSchema,
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_session),
 ):
-    db_user = session.scalar(select(User).where(User.id == user_id))
 
-    if db_user is not None:
-        db_user.name = user.name
-        db_user.email = user.email
-        db_user.password = user.password
-
-        session.add(db_user)
-        session.commit()
-        session.refresh(db_user)
-        return db_user
+    if current_user.id != user_id:
+        raise HTTPException(status_code=400, detail='Not enough permissions')
 
     else:
-        raise HTTPException(detail='Usuário não cadastrado', status_code=404)
+        current_user.name = user.name
+        current_user.password = user.password
+        current_user.email = user.email
+
+        session.commit()
+        session.refresh(current_user)
+
+        return current_user
 
 
 @app.delete('/usuarios/{user_id}', status_code=200)
-def delete_user(user_id: int, session: Session = Depends(get_session)):
-    db_user = session.scalar(select(User).where(User.id == user_id))
+def delete_user(
+    user_id: int,
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    if current_user.id != user_id:
+        raise HTTPException(status_code=400, detail=' Not enough permissions')
 
-    if db_user is not None:
-        session.delete(db_user)
-        session.commit()
-        return {'detail': 'Usuário excluído com sucesso'}
+    session.delete(current_user)
+    session.commit()
 
-    else:
-        raise HTTPException(detail='Usuário não cadastrado', status_code=404)
+    return {'detail': 'User deleted'}
 
 
 """-----------------LOGIN VIEW-----------------------"""

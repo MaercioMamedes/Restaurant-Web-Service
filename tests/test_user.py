@@ -22,10 +22,11 @@ def test_read_user(client, user):
     }
 
 
-def test_update_user(client, user):
+def test_update_user(client, user, token):
 
     response = client.put(
-        '/usuarios/1',
+        f'/usuarios/{user.id}',
+        headers={'Authorization': f'Bearer {token}'},
         json={
             'name': 'Maercio Mamedes da Silva',
             'email': 'maerciomamedes02@hotmail.com',
@@ -36,8 +37,10 @@ def test_update_user(client, user):
     assert response.status_code == 200
 
 
-def test_delete_user(client, user):
-    response = client.delete('/usuarios/1')
+def test_delete_user(client, user, token):
+    response = client.delete(
+        f'/usuarios/{user.id}', headers={'Authorization': f'Bearer {token}'}
+    )
     assert response.status_code == 200
     response_after_delete = client.get('/usuarios/1')
     assert response_after_delete.status_code == 404
