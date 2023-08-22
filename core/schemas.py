@@ -22,3 +22,12 @@ class UserPublic(UserSchema):
     id: int
     name: str
     email: EmailStr
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: str | None = None

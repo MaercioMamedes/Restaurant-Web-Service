@@ -45,6 +45,7 @@ pytest==7.4.0
 pytest-cov==4.1.0
 python-dotenv==1.0.0
 python-jose==3.3.0
+python-multipart==0.0.6
 rsa==4.9
 ruff==0.0.284
 six==1.16.0

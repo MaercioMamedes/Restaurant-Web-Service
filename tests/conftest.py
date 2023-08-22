@@ -7,6 +7,7 @@ from sqlalchemy.pool import StaticPool
 from core.database import get_session
 from core.main import app
 from core.models import Base, Product, User
+from core.security import get_password_hash
 
 
 @pytest.fixture
@@ -52,12 +53,16 @@ def product(session):
 
 @pytest.fixture
 def user(session):
+
+    password = 'secret_key'
     user = User(
         name='Maercio Mamedes',
         email='maerciomamedes@hotmail.com',
-        password='secret_key',
+        password=get_password_hash(password),
     )
     session.add(user)
     session.commit()
     session.refresh(user)
+    user.clean_password = 'secret_key'
+
     return user
