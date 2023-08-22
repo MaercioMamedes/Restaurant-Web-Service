@@ -191,7 +191,7 @@ def delete_user(user_id: int, session: Session = Depends(get_session)):
 """-----------------LOGIN VIEW-----------------------"""
 
 
-@app.post('/token', response_model=Token)
+@app.post('/token/', response_model=Token)
 def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
     session: Session = Depends(get_session),
