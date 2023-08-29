@@ -28,6 +28,10 @@
 | /token/                     | POST   | Retorna Token de autenticação do usuário      |
 
 
+### Regras de Negócios
+
+* RN01 - Manter produto é de responsabilidade de usuário cadastrado -- **REVER**
+* 
 
 
 

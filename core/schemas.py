@@ -12,6 +12,10 @@ class ProductPublic(ProductSchema):
     id: int
 
 
+class ProductList(BaseModel):
+    products: list[ProductPublic]
+
+
 class UserSchema(BaseModel):
     name: str
     email: EmailStr
@@ -31,3 +35,7 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: str | None = None
+
+
+class Message(BaseModel):
+    msg: str

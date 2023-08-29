@@ -1,6 +1,7 @@
-def test_create_product(client):
+def test_create_product(client, token):
     response = client.post(
         '/produtos/',
+        headers={'Authorization': f'Bearer {token}'},
         json={
             'description': 'Suco de Laranja 400ml',
             'price': 7.0,
@@ -25,13 +26,13 @@ def test_read_products_list(client):
 
 def test_read_product(client, product):
 
-    response = client.get('/produtos/1')
+    response = client.get(f'/produtos/{product.id}')
     assert response.status_code == 200
 
 
 def test_update_product(client, product):
     response = client.put(
-        '/produtos/1',
+        f'/produtos/{product.id}',
         json={
             'description': 'Suco de Maracujá 400ml',
             'price': 7.0,
@@ -49,6 +50,6 @@ def test_update_product(client, product):
 
 
 def test_delete_product(client, product):
-    response = client.delete('/produtos/1')
+    response = client.delete(f'/produtos/{product.id}')
     assert response.status_code == 200
     assert response.json() == {'detail': 'Produto excluído com sucesso'}
