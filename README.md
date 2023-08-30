@@ -33,5 +33,10 @@
 * RN01 - Manter produto é de responsabilidade de usuário cadastrado -- **REVER**
 * 
 
+### Funcionalidades do Projetos
 
+* :heavy_check_mark: CRUD classe User
+* :heavy_check_mark: CRUD classe Product
+* :heavy_check_mark: Autenticação por JWT
+* 
 

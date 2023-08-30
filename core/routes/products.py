@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -8,13 +10,15 @@ from core.schemas import ProductList, ProductPublic, ProductSchema
 from core.security import get_current_user
 
 router = APIRouter(prefix='/produtos', tags=['produtos'])
+session_class = Annotated[Session, Depends(get_session)]
+current_user_class = Annotated[User, Depends(get_current_user)]
 
 
 @router.post('/', response_model=ProductPublic, status_code=201)
 def create_product(
     product: ProductSchema,
-    current_user: User = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    current_user: current_user_class,
+    session: session_class,
 ):
     # endpoint create product
 
@@ -46,9 +50,7 @@ def create_product(
 
 
 @router.get('/', response_model=ProductList)
-def read_products(
-    skip: int = 0, limit: int = 100, session: Session = Depends(get_session)
-):
+def read_products(session: session_class, skip: int = 0, limit: int = 100):
     # endpoint list products
     products = session.scalars(select(Product).offset(skip).limit(limit)).all()
 
@@ -56,7 +58,7 @@ def read_products(
 
 
 @router.get('/{product_id}', response_model=ProductPublic)
-def read_product(product_id: int, session: Session = Depends(get_session)):
+def read_product(product_id: int, session: session_class):
     # endpoint get product by id
 
     db_product = session.scalar(
@@ -73,7 +75,7 @@ def read_product(product_id: int, session: Session = Depends(get_session)):
 def update_product(
     product_id: int,
     product: ProductSchema,
-    session: Session = Depends(get_session),
+    session: session_class,
 ):
     # endpoint update product
 
@@ -96,7 +98,7 @@ def update_product(
 @router.delete('/{product_id}')
 def delete_product(
     product_id: int,
-    session: Session = Depends(get_session),
+    session: session_class,
 ):
     # endpoint delete product
 
