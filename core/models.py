@@ -1,4 +1,5 @@
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
 class Base(DeclarativeBase):
@@ -21,3 +22,12 @@ class User(Base):
     name: Mapped[str]
     email: Mapped[str]
     password: Mapped[str]
+    client: Mapped['Client'] = relationship(back_populates='user')
+
+
+class Client(Base):
+    __tablename__ = 'client'
+
+    id: Mapped['int'] = mapped_column(primary_key=True, autoincrement=True)
+    user_id: Mapped['int'] = mapped_column(ForeignKey('user.id'))
+    user: Mapped['User'] = relationship(back_populates='client')
