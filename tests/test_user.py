@@ -9,6 +9,11 @@ def test_create_user(client):
     )
 
     assert response.status_code == 201
+    assert response.json() == {
+        'id': 1,
+        'name': 'Maercio Mamedes',
+        'email': 'maerciomamedes@hotmail.com',
+    }
 
 
 def test_read_user(client, user):

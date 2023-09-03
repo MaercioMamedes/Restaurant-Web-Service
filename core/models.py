@@ -23,6 +23,7 @@ class User(Base):
     email: Mapped[str]
     password: Mapped[str]
     client: Mapped['Client'] = relationship(back_populates='user')
+    employee: Mapped['Employee'] = relationship(back_populates='user')
 
 
 class Client(Base):
@@ -31,3 +32,11 @@ class Client(Base):
     id: Mapped['int'] = mapped_column(primary_key=True, autoincrement=True)
     user_id: Mapped['int'] = mapped_column(ForeignKey('user.id'))
     user: Mapped['User'] = relationship(back_populates='client')
+
+
+class Employee(Base):
+    __tablename__ = 'employee'
+    id: Mapped['int'] = mapped_column(primary_key=True, autoincrement=True)
+    user_id: Mapped['int'] = mapped_column(ForeignKey('user.id'))
+    user: Mapped['User'] = relationship(back_populates='employee')
+    manager: Mapped[bool]

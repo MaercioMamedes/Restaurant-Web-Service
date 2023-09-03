@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from core.routes import auth, products, users, client
+from core.routes import auth, client, products, users
 
 app = FastAPI()
 

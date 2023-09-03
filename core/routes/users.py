@@ -26,6 +26,7 @@ def create_user(user: UserSchema, session: Session):
 
         session.add(new_user)
         session.commit()
+        session.refresh(new_user)
 
         return new_user
 
@@ -39,7 +40,19 @@ def read_user(user_id: int, session: Session):
 
     if db_user is not None:
 
-        return {'id': db_user.id, 'name': db_user.name, 'email': db_user.email}
+        def sqlalchemy_model_to_dict(model):
+            # Obtém todos os atributos do modelo e seus valores
+            model_dict = {
+                column.name: getattr(model, column.name)
+                for column in model.__table__.columns
+            }
+            return model_dict
+
+        user_response = sqlalchemy_model_to_dict(db_user)
+        del user_response['password']
+        print(user_response)
+
+        return user_response
 
     else:
         raise HTTPException(detail='usuário não encontrado', status_code=404)

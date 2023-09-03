@@ -30,7 +30,7 @@
 
 ### Regras de Negócios
 
-* RN01 - Manter produto é de responsabilidade de usuário cadastrado -- **REVER**
+* RN01 - Manter produto é de responsabilidade do Gestor -- **REVER**
 * 
 
 ### Funcionalidades do Projetos
