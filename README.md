@@ -30,8 +30,9 @@
 
 ### Regras de Negócios
 
-* RN01 - Manter produto é de responsabilidade do Gestor -- **REVER**
-* 
+* RN01 - Manter produto é de responsabilidade do Gerente -- **REVER**
+* RN02 - Manter cliente é de responsabilidade do Funcionário
+* RN03 - Manter Funcionário é de responsabilidade do super usuário
 
 ### Funcionalidades do Projetos
 

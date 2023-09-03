@@ -15,6 +15,15 @@ class Product(Base):
     type: Mapped[str]
 
 
+class SuperUser(Base):
+    __tablename__ = 'super_user'
+
+    id: Mapped['int'] = mapped_column(primary_key=True, autoincrement=True)
+    name: Mapped[str]
+    email: Mapped[str]
+    password: Mapped[str]
+
+
 class User(Base):
     __tablename__ = 'user'
 
