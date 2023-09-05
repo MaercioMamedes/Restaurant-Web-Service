@@ -13,6 +13,7 @@ def test_create_user(client):
         'id': 1,
         'name': 'Maercio Mamedes',
         'email': 'maerciomamedes@hotmail.com',
+        'is_superuser': False,
     }
 
 
@@ -24,6 +25,7 @@ def test_read_user(client, user):
         'id': 1,
         'name': 'Maercio Mamedes',
         'email': 'maerciomamedes@hotmail.com',
+        'is_superuser': False,
     }
 
 

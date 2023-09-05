@@ -26,6 +26,7 @@ class UserPublic(BaseModel):
     id: int
     name: str
     email: EmailStr
+    is_superuser: bool
     model_config = ConfigDict(from_attributes=True)
 
 

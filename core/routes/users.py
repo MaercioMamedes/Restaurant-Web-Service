@@ -34,25 +34,13 @@ def create_user(user: UserSchema, session: Session):
         raise HTTPException(detail='Usuário já cadastrado', status_code=400)
 
 
-@router.get('/{user_id}')
+@router.get('/{user_id}', response_model=UserPublic)
 def read_user(user_id: int, session: Session):
     db_user = session.scalar(select(User).where(User.id == user_id))
 
     if db_user is not None:
 
-        def sqlalchemy_model_to_dict(model):
-            # Obtém todos os atributos do modelo e seus valores
-            model_dict = {
-                column.name: getattr(model, column.name)
-                for column in model.__table__.columns
-            }
-            return model_dict
-
-        user_response = sqlalchemy_model_to_dict(db_user)
-        del user_response['password']
-        print(user_response)
-
-        return user_response
+        return db_user
 
     else:
         raise HTTPException(detail='usuário não encontrado', status_code=404)

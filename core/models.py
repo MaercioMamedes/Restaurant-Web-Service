@@ -15,15 +15,6 @@ class Product(Base):
     type: Mapped[str]
 
 
-class SuperUser(Base):
-    __tablename__ = 'super_user'
-
-    id: Mapped['int'] = mapped_column(primary_key=True, autoincrement=True)
-    name: Mapped[str]
-    email: Mapped[str]
-    password: Mapped[str]
-
-
 class User(Base):
     __tablename__ = 'user'
 
@@ -31,6 +22,7 @@ class User(Base):
     name: Mapped[str]
     email: Mapped[str]
     password: Mapped[str]
+    is_superuser: Mapped['bool'] = mapped_column(default=False, nullable=False)
     client: Mapped['Client'] = relationship(back_populates='user')
     employee: Mapped['Employee'] = relationship(back_populates='user')
 

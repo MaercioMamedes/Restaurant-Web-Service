@@ -7,6 +7,6 @@
 
 15-08-2023 11:40
 * ENCAMINHAMENTOS
-  * Modularizar views
+  * Modularizar views - :heavy_check_mark: 05-09-2023 06:42
   * implementar validações
   * mudar banco de dados para postgres
