@@ -10,12 +10,18 @@ from core.security import create_access_token, verify_password
 
 router = APIRouter(tags=['token'])
 
+"""
+    - Authentication module: token creation route for login
+    - If username and password are valid, the authentication token is returned
+"""
+
 
 @router.post('/token', response_model=Token)
 def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
     session: Session = Depends(get_session),
 ):
+    """Request receives two fields for user authentication from the form_data parameter, username and password"""
 
     user = session.scalar(select(User).where(User.email == form_data.username))
 
