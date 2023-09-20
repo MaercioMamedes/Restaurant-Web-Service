@@ -13,6 +13,7 @@ router = APIRouter(tags=['token'])
 """
     - Authentication module: token creation route for login
     - If username and password are valid, the authentication token is returned
+    - the form receives the username field, but the data is the user's email
 """
 
 
