@@ -2,6 +2,8 @@ from sqlalchemy import select
 
 from core.models import Product, User
 
+""" use case tests for create tables """
+
 
 def test_create_product(session):
     new_product = Product(

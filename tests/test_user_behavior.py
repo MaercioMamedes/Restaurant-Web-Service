@@ -1,5 +1,7 @@
 from fastapi import status
 
+""" user interaction behavior tests """
+
 
 def test_when_user_tries_to_update_wrong_user_it_returns_error_400(
     client, user, token, other_user

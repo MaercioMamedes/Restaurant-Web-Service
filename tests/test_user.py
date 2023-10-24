@@ -1,3 +1,6 @@
+"""use case tests for User class resources"""
+
+
 def test_create_user(client):
     response = client.post(
         '/usuarios/',

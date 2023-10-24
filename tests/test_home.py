@@ -1,5 +1,7 @@
 from fastapi import status
 
+""" use case tests for home endpoint"""
+
 
 def test_home(client):
     response = client.get('/')

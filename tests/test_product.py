@@ -1,3 +1,6 @@
+"""use case tests for Product class resources"""
+
+
 def test_create_product(client, token):
     response = client.post(
         '/produtos/',
