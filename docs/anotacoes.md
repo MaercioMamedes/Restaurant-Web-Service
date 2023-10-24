@@ -10,3 +10,12 @@
   * Modularizar views - :heavy_check_mark: 05-09-2023 06:42
   * implementar validações
   * mudar banco de dados para postgres
+
+24-10-2023 19:12
+
+* ENCAMINHAMENTOS
+  * implementar autenticação e autorização para recursos da classe Cliente
+  * mudar nome da classe Client para Customer
+  * escrever regras de negócios
+  * escrever testes para recursos da classe employee
+  * 

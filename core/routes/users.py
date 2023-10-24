@@ -14,6 +14,9 @@ Session = Annotated[Session, Depends(get_session)]
 UserSession = Annotated[User, Depends(get_current_user)]
 
 
+""" Routes to User class resources """
+
+
 @router.post('/', response_model=UserPublic, status_code=201)
 def create_user(user: UserSchema, session: Session):
     db_user = session.scalar(select(User).where(User.name == user.name))

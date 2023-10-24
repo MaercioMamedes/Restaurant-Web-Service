@@ -7,3 +7,6 @@ def test_create_client(client, token):
     )
 
     assert response.status_code == 201
+
+
+# test happy path for Customer class

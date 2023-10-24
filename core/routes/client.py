@@ -12,9 +12,14 @@ router = APIRouter(prefix='/clientes', tags=['clientes'])
 session_class = Annotated[Session, Depends(get_session)]
 user_session = Annotated[User, Depends(get_current_user)]
 
+""" Routes to Customer class resources """
 
+
+# implement authentication for this request
 @router.post('/', status_code=201)
 def create_client(current_user: user_session, session: session_class):
+    """Endpoint to create client, for logged in user"""
+
     db_client = session.scalar(
         select(Client).where(Client.user_id == current_user.id)
     )

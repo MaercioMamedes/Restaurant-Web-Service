@@ -3,6 +3,9 @@ from sqlalchemy.orm import Session
 
 from core.settings import Settings
 
+""" session instantiation with the database """
+
+
 engine = create_engine(Settings().DATABASE_URL)
 
 
