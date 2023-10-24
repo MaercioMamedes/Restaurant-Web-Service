@@ -2,8 +2,8 @@ def test_create_user(client):
     response = client.post(
         '/usuarios/',
         json={
-            'name': 'Maercio Mamedes',
-            'email': 'maerciomamedes@hotmail.com',
+            'name': 'Test User',
+            'email': 'test_user@test.com',
             'password': 'secret_key',
         },
     )
@@ -11,8 +11,8 @@ def test_create_user(client):
     assert response.status_code == 201
     assert response.json() == {
         'id': 1,
-        'name': 'Maercio Mamedes',
-        'email': 'maerciomamedes@hotmail.com',
+        'name': 'Test User',
+        'email': 'test_user@test.com',
         'is_superuser': False,
     }
 
@@ -23,8 +23,8 @@ def test_read_user(client, user):
     assert response.status_code == 200
     assert response.json() == {
         'id': 1,
-        'name': 'Maercio Mamedes',
-        'email': 'maerciomamedes@hotmail.com',
+        'name': 'Test User',
+        'email': 'test_user@test.com',
         'is_superuser': False,
     }
 
@@ -35,8 +35,8 @@ def test_update_user(client, user, token):
         f'/usuarios/{user.id}',
         headers={'Authorization': f'Bearer {token}'},
         json={
-            'name': 'Maercio Mamedes da Silva',
-            'email': 'maerciomamedes02@hotmail.com',
+            'name': 'Test User',
+            'email': 'test_user@test.com.br',
             'password': 'new_secret_key',
         },
     )

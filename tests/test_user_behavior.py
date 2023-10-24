@@ -1,15 +1,15 @@
 from fastapi import status
 
 
-def test_when_user_tries_to_update_another_it_returns_error_400(
-    client, user, token, list_users
+def test_when_user_tries_to_update_wrong_user_it_returns_error_400(
+    client, user, token, other_user
 ):
     response = client.put(
-        '/usuarios/2',
+        f'/usuarios/{other_user.id}',
         headers={'Authorization': f'Bearer {token}'},
         json={
-            'name': 'Maercio Mamedes da Silva',
-            'email': 'maerciomamedes02@hotmail.com',
+            'name': 'Test User',
+            'email': 'test_user@test.com.br',
             'password': 'new_secret_key',
         },
     )

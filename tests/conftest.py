@@ -9,9 +9,13 @@ from core.main import app
 from core.models import Base, Product, User
 from core.security import get_password_hash
 
+""" test scenario settings """
+
 
 @pytest.fixture
 def session():
+    """instantiating a mock session for an in-memory database"""
+
     engine = create_engine(
         'sqlite:///:memory:',
         connect_args={'check_same_thread': False},
@@ -28,6 +32,8 @@ def session():
 
 @pytest.fixture
 def client(session):
+    """HTTP client for test requests"""
+
     def get_session_override():
         return session
 
@@ -40,6 +46,8 @@ def client(session):
 
 @pytest.fixture
 def product(session):
+    """Instantiating a test product"""
+
     product = Product(
         description='Suco de Laranja 400ml',
         price=7.0,
@@ -53,11 +61,12 @@ def product(session):
 
 @pytest.fixture
 def user(session):
+    """Instantiating a test user"""
 
     password = 'secret_key'
     user = User(
-        name='Maercio Mamedes',
-        email='maerciomamedes@hotmail.com',
+        name='Test User',
+        email='test_user@test.com',
         password=get_password_hash(password),
     )
     session.add(user)
@@ -70,12 +79,13 @@ def user(session):
 
 @pytest.fixture
 def list_users(session):
+    """Creating a list of users for testing"""
 
     for i in range(10):
         password = f'secret_key{i}'
         user = User(
-            name=f'Maercio Mamedes{i}',
-            email=f'maerciomamedes@hotmail.com{i}',
+            name=f'Test User_{i}',
+            email=f'test_user_{i}@test.com',
             password=get_password_hash(password),
         )
         session.add(user)
@@ -87,7 +97,14 @@ def list_users(session):
 
 
 @pytest.fixture
+def other_user(session, list_users):
+
+    return list_users[1]
+
+
+@pytest.fixture
 def token(client, user):
+    """authentication token for the test user"""
     response = client.post(
         '/token/',
         data={'username': user.email, 'password': user.clean_password},
