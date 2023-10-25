@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from core.database import get_session
-from core.models import User
+from core.models.user import User
 from core.schemas import Token
 from core.security import create_access_token, verify_password
 

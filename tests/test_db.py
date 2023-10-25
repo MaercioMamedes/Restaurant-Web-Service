@@ -1,6 +1,7 @@
 from sqlalchemy import select
 
-from core.models import Product, User
+from core.models.product import Product
+from core.models.user import User
 
 """ use case tests for create tables """
 

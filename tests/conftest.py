@@ -6,7 +6,9 @@ from sqlalchemy.pool import StaticPool
 
 from core.database import get_session
 from core.main import app
-from core.models import Base, Product, User
+from core.models.base import Base
+from core.models.product import Product
+from core.models.user import User
 from core.security import get_password_hash
 
 """ test scenario settings """
