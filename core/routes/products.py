@@ -5,7 +5,8 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from core.database import get_session
-from core.models import Product, User
+from core.models.product import Product
+from core.models.user import User
 from core.schemas import ProductList, ProductPublic, ProductSchema
 from core.security import get_current_user
 
