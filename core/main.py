@@ -2,14 +2,14 @@ import socket
 
 from fastapi import FastAPI
 
-from core.routes import auth, client, employee, products, users
+from core.routes import auth, consumer, employee, products, users
 
 app = FastAPI()
 
 app.include_router(users.router)
 app.include_router(products.router)
 app.include_router(auth.router)
-app.include_router(client.router)
+app.include_router(consumer.router)
 app.include_router(employee.router)
 
 
